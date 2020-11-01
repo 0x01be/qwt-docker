@@ -12,6 +12,7 @@ RUN apk add --no-cache --virtual gnuradio-edge-build-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     qt5-qtbase-dev \
     qt5-qtsvg-dev \
+    py3-qt5 \
     python3-dev
 
 ENV QWT_SVN_BRANCH 6.1
@@ -35,7 +36,7 @@ RUN sed -i.bak s/DocType\=\"dict-of-double-QString\"//g /pyqt-qwt/sip/qmap_conve
 
 # Needs to be sip4 (don't install with pip)
 RUN apk add py3-sip-dev
-RUN apk add py3-qt5
+
 RUN python3 configure.py --qmake /usr/bin/qmake-qt5 --verbose
 RUN make install
 
