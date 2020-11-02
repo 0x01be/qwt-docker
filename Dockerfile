@@ -24,8 +24,11 @@ WORKDIR /qwt
 
 RUN qmake-qt5 qwt.pro
 RUN make install
-RUN cp -R /usr/local/qwt-${QWT_VERSION}-svn/lib/* /usr/lib/
-RUN cp -R /usr/local/qwt-${QWT_VERSION}-svn/include/* /usr/include/
+
+RUN mkdir -p /opt/qwt/lib/ &&\
+    mkdir -p /opt/qwt/include/ &&\
+    cp -R /usr/local/qwt-${QWT_VERSION}-svn/lib/* /opt/qwt/lib/ &&\
+    cp -R /usr/local/qwt-${QWT_VERSION}-svn/include/* /opt/qwt/include/
 
 ENV PYQT_QWT_REVISION master
 RUN git clone --depth 1 --branch ${PYQT_QWT_REVISION} https://github.com/GauiStori/PyQt-Qwt.git /pyqt-qwt
@@ -37,6 +40,9 @@ RUN sed -i.bak s/DocType\=\"dict-of-double-QString\"//g /pyqt-qwt/sip/qmap_conve
 # Needs to be sip4 (don't install with pip)
 RUN apk add py3-sip-dev
 
-RUN python3 configure.py --qmake /usr/bin/qmake-qt5 --verbose
+RUN python3 configure.py \
+    --prefix=/opt/qwt/ \
+    --qmake /usr/bin/qmake-qt5 \
+    --verbose
 RUN make install
 
