@@ -41,7 +41,7 @@ RUN sed -i.bak s/DocType\=\"dict-of-double-QString\"//g /pyqt-qwt/sip/qmap_conve
 RUN apk add py3-sip-dev
 
 RUN python3 configure.py \
-    --prefix=/opt/qwt/ \
+    --destdir=/opt/qwt/ \
     --qmake /usr/bin/qmake-qt5 \
     --verbose
 RUN make install
