@@ -42,6 +42,7 @@ RUN apk add py3-sip-dev
 
 RUN python3 configure.py \
     --destdir=/opt/qwt/ \
+    --qwt-incdir=/opt/qwt/ \
     --qmake /usr/bin/qmake-qt5 \
     --verbose
 RUN make install
